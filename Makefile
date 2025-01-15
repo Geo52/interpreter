@@ -1,7 +1,7 @@
-all: main
+all: lexer
 
-main: main.c
-	gcc -o main main.c -g
+lexer: lexer.c
+	gcc -o lexer lexer.c -g
 
 clean:
-	rm main
+	rm lexer
