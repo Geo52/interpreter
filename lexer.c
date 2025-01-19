@@ -16,6 +16,7 @@ typedef enum
     SEMICOLON,
     SLASH,
     STAR,
+    UNKNOWN,
 } Token_Type;
 
 typedef struct
@@ -72,6 +73,7 @@ Token tokenizer(char characterInQuestion, Token token)
         token = tokenCreate(STAR, NULL);
         break;
     default:
+        token = tokenCreate(UNKNOWN, NULL);
         break;
     }
     return token;
@@ -81,21 +83,23 @@ int main()
 {
     FILE *file;
     file = fopen("source.txt", "r");
-    char source_code[100];
-    fgets(source_code, 100, file);
 
     // loop through the source code one character at a time
-    for (int i = 0; source_code[i] != '\0'; i++)
+    int characterInQuestion;
+    while ((characterInQuestion = fgetc(file)) != EOF)
     {
         // ignore whitespace
-        if (isspace(source_code[i]))
+        if (isspace(characterInQuestion))
         {
             continue;
         }
 
-        Token token = tokenizer(source_code[i], token);
+        Token token = tokenizer(characterInQuestion, token);
+
+        printf("%c\n", characterInQuestion);
 
         printf("Token Type: %d  ", token.type);
         printf("Token literal: %s\n", token.literal);
     }
+    fclose(file);
 }
