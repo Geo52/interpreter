@@ -79,10 +79,12 @@ Token tokenizer(char characterInQuestion, Token token)
 
 int main()
 {
-    // hard coded example source code
-    char source_code[] = "(){},.-+;/*";
+    FILE *file;
+    file = fopen("source.txt", "r");
+    char source_code[100];
+    fgets(source_code, 100, file);
 
-    // loop through the source code on character at a time
+    // loop through the source code one character at a time
     for (int i = 0; source_code[i] != '\0'; i++)
     {
         // ignore whitespace
@@ -93,7 +95,7 @@ int main()
 
         Token token = tokenizer(source_code[i], token);
 
-        printf("Token Type: %d\n", token.type);
+        printf("Token Type: %d  ", token.type);
         printf("Token literal: %s\n", token.literal);
     }
 }
